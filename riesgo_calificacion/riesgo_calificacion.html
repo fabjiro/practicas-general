@@ -35,9 +35,6 @@
         <thead>
                 <tr>
                     <th class="text-center">
-                        Valor
-                    </th>
-                    <th class="text-center">
                         Rango min
                     </th>
                     <th class="text-center">
@@ -61,6 +58,240 @@
         </tbody>
     </table>
 
+     <!-- Modal Agregar -->
+            <div class="modal fade" id="modalAgregar" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalAgregarLabel">Agregar Riesgo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="formAgregar">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="rangoMinAgregar" class="form-label">Rango Min</label>
+                                    <input type="number" class="form-control" id="rangoMinAgregar" name="rangoMin" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="rangoMaxAgregar" class="form-label">Rango Max</label>
+                                    <input type="number" class="form-control" id="rangoMaxAgregar" name="rangoMax" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="riesgoAgregar" class="form-label">Riesgo</label>
+                                    <input type="text" class="form-control" id="riesgoAgregar" name="riesgo" required maxlength="50">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="colorAgregar" class="form-label">Color</label>
+                                    <input type="color" class="form-control form-control-color" id="colorAgregar" name="color" value="#ff0000" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="activoAgregar" class="form-label">Activo</label>
+                                    <select class="form-select" id="activoAgregar" name="activo" required>
+                                        <option value="SI">SI</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Editar -->
+            <div class="modal fade" id="modalEditar" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalEditarLabel">Editar Riesgo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="formEditar">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="rangoMinEditar" class="form-label">Rango Min</label>
+                                    <input type="number" class="form-control" id="rangoMinEditar" name="rangoMin" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="rangoMaxEditar" class="form-label">Rango Max</label>
+                                    <input type="number" class="form-control" id="rangoMaxEditar" name="rangoMax" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="riesgoEditar" class="form-label">Riesgo</label>
+                                    <input type="text" class="form-control" id="riesgoEditar" name="riesgo" required maxlength="50">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="colorEditar" class="form-label">Color</label>
+                                    <input type="color" class="form-control form-control-color" id="colorEditar" name="color" value="#ff0000" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="activoEditar" class="form-label" hidden>Activo</label>
+                                    <select class="form-select" id="activoEditar" name="activo" required hidden>
+                                        <option value="SI">SI</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            
 </div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    
+let riesgos = [
+    { rangoMin: 0, rangoMax: 10, riesgo: 'Bajo', color: '#dc3545', activo: 'SI'},
+     {rangoMin: 11, rangoMax: 20, riesgo: 'Bajo', color: '#dc3545', activo: 'NO'}
+];
+
+
+function renderTabla() {
+    let tbody = '';
+    riesgos.forEach((r, i) => {
+        tbody += `<tr>
+            <td class='text-center'>${r.rangoMin}</td>
+            <td class='text-center'>${r.rangoMax}</td>
+            <td>${r.riesgo}</td>
+            <td class='text-center'><span class='badge' style='background:${r.color};'>&nbsp;&nbsp;&nbsp;</span></td>
+            <td class='text-center'>${r.activo}</td>
+            <td class='text-center'>
+                <button class='btn btn-primary btn-sm btnEditar' data-index='${i}'><i class='bi bi-pencil-fill'></i></button>
+                ${
+                    r.activo.toLowerCase() === 'si'
+                    ? `<button class='btn btn-warning btn-sm btnDesactivar' data-index='${i}'> <i class="bi bi-ban"></i> </button>`
+                    : `<button class='btn btn-success btn-sm btnActivar' data-index='${i}'> <i class="bi bi-check-square-fill"></i> </button>`
+                }
+                <button class='btn btn-danger btn-sm btnEliminar'> <i class="bi bi-trash-fill"></i> </button>
+            </td>
+        </tr>`;
+    });
+    $(".table tbody").html(tbody);
+}
+
+$(document).ready(function() {
+    
+    renderTabla();
+
+    $(document).on('click', '.btnActivar', function() {
+    let idx = $(this).data('index');
+    riesgos[idx].activo = 'SI';
+    renderTabla();
+    });
+
+    $(document).on('click', '.btnDesactivar', function() {
+        let idx = $(this).data('index');
+        riesgos[idx].activo = 'NO';
+        renderTabla();
+    });
+  
+    $(document).on('click', '.btnEliminar', function() {
+        let idx = $(this).data('index');
+        if (confirm('¿Estás seguro de eliminar este riesgo?')) {
+            riesgos.splice(idx, 1);
+            renderTabla();
+        }
+    });
+
+
+    $('#btnAgregar').click(function() {
+        $('#formAgregar')[0].reset();
+        $('#modalAgregar').modal('show');
+    });  
+
+    $('#formAgregar').submit(function(e) {
+        e.preventDefault();
+        let nuevo = {
+            rangoMin: $('#rangoMinAgregar').val(),
+            rangoMax: $('#rangoMaxAgregar').val(),
+            riesgo: $('#riesgoAgregar').val(),
+            color: $('#colorAgregar').val(),
+            activo: $('#activoAgregar').val()
+        };
+        
+        // Validaciones
+        if (nuevo.rangoMin == nuevo.rangoMax) {
+            alert('El rango mínimo no puede ser igual al rango máximo');
+            return;
+        }
+
+        if (parseInt(nuevo.rangoMin) > parseInt(nuevo.rangoMax)) {
+            alert('Rango Min no puede ser mayor que Rango Max');
+            return;
+        }
+
+        let solapar = riesgos.some(r =>
+            (nuevo.rangoMin <= r.rangoMax && nuevo.rangoMax >= r.rangoMin)
+        );
+        if (solapar) {
+            alert('El rango ingresado se solapa con otro existente.');
+            return;
+        }
+        riesgos.push(nuevo);
+        renderTabla();
+        $('#modalAgregar').modal('hide');
+    });
+
+    $(document).on('click', '.btnEditar', function() {
+        let idx = $(this).data('index');
+        let r = riesgos[idx];
+        $('#rangoMinEditar').val(r.rangoMin);
+        $('#rangoMaxEditar').val(r.rangoMax);
+        $('#riesgoEditar').val(r.riesgo);
+        $('#colorEditar').val(r.color);
+        $('#activoEditar').val(r.activo);
+        $('#formEditar').data('index', idx);
+        $('#modalEditar').modal('show');
+    });
+
+    $('#formEditar').submit(function(e) {
+        e.preventDefault();
+        let idx = $(this).data('index');
+        let editado = {
+            rangoMin: $('#rangoMinEditar').val(),
+            rangoMax: $('#rangoMaxEditar').val(),
+            riesgo: $('#riesgoEditar').val(),
+            color: $('#colorEditar').val(),
+            activo: $('#activoEditar').val()
+        };
+       // Validaciones
+        if (editado.rangoMin == editado.rangoMax) {
+            alert('El rango mínimo no puede ser igual al rango máximo');
+            return;
+        }
+
+        if (parseInt(editado.rangoMin) > parseInt(editado.rangoMax)) {
+            alert('Rango Min no puede ser mayor que Rango Max');
+            return;
+        }
+
+        // Validar que no exista otro registro con el mismo rango (excepto el actual)
+        let solapado = riesgos.some((r, i) =>
+        i !== idx &&
+        (editado.rangoMin <= r.rangoMax && editado.rangoMax >= r.rangoMin)
+        );
+        if (solapado) {
+            alert('El rango ingresado se solapa con otro existente.');
+            return;
+        }
+        
+        riesgos[idx] = editado; 
+        renderTabla();
+        $('#modalEditar').modal('hide');
+    });
+
+});
+</script>
 </body>
 </html>
