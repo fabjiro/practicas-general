@@ -139,6 +139,26 @@ function renderTabla() {
 $(document).ready(function() {
     
     renderTabla();
+        $(document).on('click', '.btnActivar', function() {
+        let idx = $(this).data('index');
+        riesgos[idx].activo = 'SI';
+        renderTabla();
+    });
+
+    $(document).on('click', '.btnDesactivar', function() {
+        let idx = $(this).data('index');
+        riesgos[idx].activo = 'NO';
+        renderTabla();
+    });
+  
+    $(document).on('click', '.btnEliminar', function() {
+        let idx = $(this).data('index');
+        if (confirm('¿Estás seguro de eliminar este riesgo?')) {
+            riesgos.splice(idx, 1);
+            renderTabla();
+        }
+    });
+
 
     $('#btnAgregar').click(function() {
         $('#formAgregar')[0].reset();
