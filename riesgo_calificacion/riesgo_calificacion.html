@@ -100,6 +100,50 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Editar -->
+            <div class="modal fade" id="modalEditar" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalEditarLabel">Editar Riesgo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="formEditar">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="rangoMinEditar" class="form-label">Rango Min</label>
+                                    <input type="number" class="form-control" id="rangoMinEditar" name="rangoMin" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="rangoMaxEditar" class="form-label">Rango Max</label>
+                                    <input type="number" class="form-control" id="rangoMaxEditar" name="rangoMax" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="riesgoEditar" class="form-label">Riesgo</label>
+                                    <input type="text" class="form-control" id="riesgoEditar" name="riesgo" required maxlength="50">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="colorEditar" class="form-label">Color</label>
+                                    <input type="color" class="form-control form-control-color" id="colorEditar" name="color" value="#ff0000" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="activoEditar" class="form-label" hidden>Activo</label>
+                                    <select class="form-select" id="activoEditar" name="activo" required hidden>
+                                        <option value="SI">SI</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -108,8 +152,8 @@
 <script>
     
 let riesgos = [
-    { rangoMin: 0, rangoMax: 10, riesgo: 'Bajo', color: '#dc3545', activo: 'Si'},
-     {rangoMin: 11, rangoMax: 20, riesgo: 'Bajo', color: '#dc3545', activo: 'No'}
+    { rangoMin: 0, rangoMax: 10, riesgo: 'Bajo', color: '#dc3545', activo: 'SI'},
+     {rangoMin: 11, rangoMax: 20, riesgo: 'Bajo', color: '#dc3545', activo: 'NO'}
 ];
 
 
@@ -139,10 +183,11 @@ function renderTabla() {
 $(document).ready(function() {
     
     renderTabla();
-        $(document).on('click', '.btnActivar', function() {
-        let idx = $(this).data('index');
-        riesgos[idx].activo = 'SI';
-        renderTabla();
+
+    $(document).on('click', '.btnActivar', function() {
+    let idx = $(this).data('index');
+    riesgos[idx].activo = 'SI';
+    renderTabla();
     });
 
     $(document).on('click', '.btnDesactivar', function() {
@@ -176,9 +221,6 @@ $(document).ready(function() {
         };
         
         // Validaciones
-        let minRango = riesgos.length ? Math.min(...riesgos.map(r => parseInt(r.rangoMin))) : null;
-        let maxRango = riesgos.length ? Math.max(...riesgos.map(r => parseInt(r.rangoMax))) : null;
-
         if (nuevo.rangoMin == nuevo.rangoMax) {
             alert('El rango mínimo no puede ser igual al rango máximo');
             return;
@@ -189,20 +231,64 @@ $(document).ready(function() {
             return;
         }
 
-         if (minRango !== null && maxRango !== null) {
-            if (parseInt(nuevo.rangoMin) < minRango || parseInt(nuevo.rangoMin) <= maxRango) {
-                alert(`El rango minimo debe ser mayor que ${maxRango}`);
-                return;
-            }
-
-            if (parseInt(nuevo.rangoMax) < minRango || parseInt(nuevo.rangoMax) <= maxRango) {
-                alert(`El rango máximo debe ser mayor que ${maxRango}`);
-                return;
-            }
+        let solapar = riesgos.some(r =>
+            (nuevo.rangoMin <= r.rangoMax && nuevo.rangoMax >= r.rangoMin)
+        );
+        if (solapar) {
+            alert('El rango ingresado se solapa con otro existente.');
+            return;
         }
         riesgos.push(nuevo);
         renderTabla();
         $('#modalAgregar').modal('hide');
+    });
+
+    $(document).on('click', '.btnEditar', function() {
+        let idx = $(this).data('index');
+        let r = riesgos[idx];
+        $('#rangoMinEditar').val(r.rangoMin);
+        $('#rangoMaxEditar').val(r.rangoMax);
+        $('#riesgoEditar').val(r.riesgo);
+        $('#colorEditar').val(r.color);
+        $('#activoEditar').val(r.activo);
+        $('#formEditar').data('index', idx);
+        $('#modalEditar').modal('show');
+    });
+
+    $('#formEditar').submit(function(e) {
+        e.preventDefault();
+        let idx = $(this).data('index');
+        let editado = {
+            rangoMin: $('#rangoMinEditar').val(),
+            rangoMax: $('#rangoMaxEditar').val(),
+            riesgo: $('#riesgoEditar').val(),
+            color: $('#colorEditar').val(),
+            activo: $('#activoEditar').val()
+        };
+       // Validaciones
+        if (editado.rangoMin == editado.rangoMax) {
+            alert('El rango mínimo no puede ser igual al rango máximo');
+            return;
+        }
+
+        if (parseInt(editado.rangoMin) > parseInt(editado.rangoMax)) {
+            alert('Rango Min no puede ser mayor que Rango Max');
+            return;
+        }
+
+        // Validar que no exista otro registro con el mismo rango (excepto el actual)
+        let solapado = riesgos.some((r, i) =>
+        i !== idx &&
+        (editado.rangoMin <= r.rangoMax && editado.rangoMax >= r.rangoMin)
+        );
+        if (solapado) {
+            alert('El rango ingresado se solapa con otro existente.');
+            return;
+        }
+        
+        riesgos[idx] = editado; 
+        renderTabla();
+        $('#modalEditar').modal('hide');
     });
 
 });
