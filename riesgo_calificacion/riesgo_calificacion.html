@@ -156,6 +156,24 @@ let riesgos = [
      {rangoMin: 11, rangoMax: 20, riesgo: 'Bajo', color: '#dc3545', activo: 'NO'}
 ];
 
+function validarRango(rangoMin, rangoMax, index = -1) {
+    rangoMin = parseInt(rangoMin);
+    rangoMax = parseInt(rangoMax);
+
+    for (let i = 0; i < riesgos.length; i++) {
+        if (i === index) continue; // ignorar el que se está editando
+        let r = riesgos[i];
+        let min = parseInt(r.rangoMin);
+        let max = parseInt(r.rangoMax);
+
+        // Condición de solapamiento
+        if (rangoMin <= max && rangoMax >= min) {
+            return true;
+        }
+    }
+    return false;
+    }
+
 
 function renderTabla() {
     let tbody = '';
@@ -173,7 +191,7 @@ function renderTabla() {
                     ? `<button class='btn btn-warning btn-sm btnDesactivar' data-index='${i}'> <i class="bi bi-ban"></i> </button>`
                     : `<button class='btn btn-success btn-sm btnActivar' data-index='${i}'> <i class="bi bi-check-square-fill"></i> </button>`
                 }
-                <button class='btn btn-danger btn-sm btnEliminar'> <i class="bi bi-trash-fill"></i> </button>
+                <button class='btn btn-danger btn-sm btnEliminar' data-index='${i}'> <i class="bi bi-trash-fill"></i> </button>
             </td>
         </tr>`;
     });
@@ -231,13 +249,11 @@ $(document).ready(function() {
             return;
         }
 
-        let solapar = riesgos.some(r =>
-            (nuevo.rangoMin <= r.rangoMax && nuevo.rangoMax >= r.rangoMin)
-        );
-        if (solapar) {
-            alert('El rango ingresado se solapa con otro existente.');
-            return;
+        if (validarRango(nuevo.rangoMin, nuevo.rangoMax)) {
+        alert('El rango ingresado se solapa con uno existente');
+        return;
         }
+
         riesgos.push(nuevo);
         renderTabla();
         $('#modalAgregar').modal('hide');
@@ -276,16 +292,11 @@ $(document).ready(function() {
             return;
         }
 
-        // Validar que no exista otro registro con el mismo rango (excepto el actual)
-        let solapado = riesgos.some((r, i) =>
-        i !== idx &&
-        (editado.rangoMin <= r.rangoMax && editado.rangoMax >= r.rangoMin)
-        );
-        if (solapado) {
-            alert('El rango ingresado se solapa con otro existente.');
-            return;
+         if (validarRango(editado.rangoMin, editado.rangoMax, idx)) {
+        alert('El rango ingresado se solapa con uno existente');
+        return;
         }
-        
+
         riesgos[idx] = editado; 
         renderTabla();
         $('#modalEditar').modal('hide');
