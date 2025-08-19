@@ -1,0 +1,8 @@
+.btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+.table thead {
+    --bs-table-bg: #2596be;
+    --bs-table-color: #fff;
+}
