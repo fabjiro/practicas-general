@@ -13,7 +13,9 @@ export function renderTableColumn(data) {
           item.prioridad
         }" data-bs-toggle="modal"
       data-bs-target="#addModal">Editar</button>
-        <button type="button" class="btn btn-danger">Eliminar</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="${
+          item.prioridad
+        }">Eliminar</button>
       </td>         
     `;
     tableBody.appendChild(row);

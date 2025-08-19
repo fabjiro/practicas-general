@@ -54,6 +54,26 @@ const data = [];
 
 const modalEl = document.getElementById("addModal");
 const form = document.getElementById("riskPriorityForm");
+const deleteModalEl = document.getElementById("deleteModal");
+
+deleteModalEl.addEventListener("show.bs.modal", function (event) {
+  const button = event.relatedTarget;
+  const itemId = button.getAttribute("data-id");
+  deleteModalEl.querySelector(
+    ".btn-danger"
+  ).setAttribute("data-id", itemId);
+});
+
+const deleteButton = deleteModalEl.querySelector(".btn-danger");
+deleteButton.addEventListener("click", function () {
+  const itemId = deleteButton.getAttribute("data-id");
+  const index = data.findIndex((item) => item.prioridad === itemId);
+  if (index !== -1) {
+    data.splice(index, 1);
+    renderTableColumn(data);
+  }
+  bootstrap.Modal.getInstance(deleteModalEl).hide();
+});
 
 modalEl.addEventListener("show.bs.modal", function (event) {
   const button = event.relatedTarget;
