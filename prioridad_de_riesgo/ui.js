@@ -1,4 +1,4 @@
-export function renderTableColumn(data) {
+export function renderTable(data) {
   const tableBody = document.querySelector("table tbody");
   tableBody.innerHTML = "";
   data.forEach((item) => {
@@ -16,7 +16,7 @@ export function renderTableColumn(data) {
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="${
           item.prioridad
         }">Eliminar</button>
-      </td>         
+      </td>
     `;
     tableBody.appendChild(row);
   });
@@ -26,4 +26,28 @@ export function renderFormMessageError(message) {
   const element = document.querySelector(".form-message");
   element.removeAttribute("hidden");
   element.innerHTML = message || "Ocurrió un error al guardar";
+}
+
+export function clearForm() {
+    const form = document.getElementById("riskPriorityForm");
+    form.reset();
+    form.classList.remove("was-validated");
+    const formMessage = document.querySelector(".form-message");
+    formMessage.setAttribute("hidden", true);
+}
+
+export function closeModal() {
+    const modalEl = document.getElementById("addModal");
+    bootstrap.Modal.getInstance(modalEl).hide();
+    clearForm();
+}
+
+export function setFormValues(item) {
+    const form = document.getElementById("riskPriorityForm");
+    form.querySelector("#prioridad").value = item.prioridad;
+    form.querySelector("#rangoMin").value = item.rangoMin;
+    form.querySelector("#rangoMax").value = item.rangoMax;
+    form.querySelector(
+        `input[name="radioDefault"][value="${item.activo ? "si" : "no"}"]`
+    ).checked = true;
 }
