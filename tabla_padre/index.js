@@ -4,6 +4,7 @@ let actividades = [
   { nombre: 'Mejora de infraestructura', indicador: 'Aulas construidas', responsable: 'Área de Infraestructura', inicio: '2025-10-01', fin: '2025-12-31' }
 ];
 let idxEdit = -1;
+let rowTemplate = '';
 
 function formatDate(iso) {
   if (!iso) return "";
@@ -18,26 +19,36 @@ function renderTabla() {
     return;
   }
 
-  const rows = actividades
-    .map((a, i) => `
-      <tr>
-        <td>${a.nombre}</td>
-        <td class="text-center">${a.indicador}</td>
-        <td>${a.responsable}</td>
-        <td class="text-center">${formatDate(a.inicio)} al ${formatDate(a.fin)}</td>
-        <td class="text-center">
-          <button class="btn btn-primary btn-sm btn-edit" data-index="${i}"><i class="bi bi-pencil-fill"></i></button>
-          <button class="btn btn-danger btn-sm btn-delete" data-index="${i}"><i class="bi bi-trash-fill"></i></button>
-        </td>
-      </tr>`)
-    .join("");
-  $tbody.html(rows);
+  if (!rowTemplate) {
+    // Si la plantilla aún no cargó, intenta cargar y luego renderiza
+    return loadTemplate().then(renderTabla);
+  }
+
+  const view = {
+    actividades: actividades.map((a, i) => ({
+      index: i,
+      nombre: a.nombre,
+      indicador: a.indicador,
+      responsable: a.responsable,
+      inicioFormat: formatDate(a.inicio),
+      finFormat: formatDate(a.fin)
+    }))
+  };
+
+  const rendered = Mustache.render(rowTemplate, view);
+  $tbody.html(rendered);
 }
 
 function expandActividades() {
   const el = document.getElementById("actividadesCollapse");
   const instance = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
   instance.show();
+}
+
+function loadTemplate() {
+  return $.get('./partial.mst')
+    .done(tpl => { rowTemplate = tpl; })
+    .fail(() => { console.error('No se pudo cargar partial.mst'); });
 }
 
 $(document).ready(function () {
@@ -47,7 +58,8 @@ $(document).ready(function () {
     $(this).find('.chevron').toggleClass('rotated');
   });
 
-  renderTabla();
+  // Cargar plantilla y renderizar
+  loadTemplate().then(renderTabla);
 
   // Agregar actividad
   $("#btnAgregar").on("click", function (e) {

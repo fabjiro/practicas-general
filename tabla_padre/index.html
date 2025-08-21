@@ -117,54 +117,16 @@
     </div>
   </div>
 
-  <!-- Modal Editar Actividad -->
-  <div class="modal fade" id="modalEditarActividad" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Editar Actividad</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form id="formEditarActividad">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="form-label">Nombre</label>
-              <input id="editarNombre" type="text" class="form-control" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Indicador</label>
-              <select id="editarIndicador" class="form-select" required>
-                <option>Matrícula</option>
-                <option>Docentes capacitados</option>
-                <option>Aulas construidas</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Responsable</label>
-              <textarea id="editarResponsable" rows="2" class="form-control" required></textarea>
-            </div>
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label">Fecha Inicio</label>
-                <input id="editarInicio" type="date" class="form-control" required />
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Fecha Fin</label>
-                <input id="editarFin" type="date" class="form-control" required />
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Actualizar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  <!-- La plantilla Mustache ahora vive en tabla_padre/partial.mst -->
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
+  <script>
+    if (!window.Mustache) {
+      document.write('\x3Cscript src="https://unpkg.com/mustache@4.2.0/mustache.min.js">\x3C/script>');
+    }
+  </script>
   <script src="./index.js"></script>
 </body>
 </html>
