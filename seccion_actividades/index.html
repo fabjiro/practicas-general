@@ -224,6 +224,157 @@
           </div>
         </div>
       </div>
+      <div
+        class="modal fade"
+        id="modalEditarActividad"
+        tabindex="-1"
+        aria-labelledby="actividadModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="actividadModalLabel">
+                Editar Actividad
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              ></button>
+            </div>
+
+            <div class="modal-body">
+              <form id="formEditarActividad">
+                <!-- Descripción -->
+                <div class="mb-3">
+                  <label for="descripcion" class="form-label"
+                    >Descripción</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editarDescripcion"
+                    name="descripcion"
+                    placeholder="Ej. Diseño de la base de datos"
+                    required
+                  />
+                </div>
+
+                <!-- Responsables -->
+                <div class="mb-3">
+                  <label for="responsables" class="form-label"
+                    >Responsables</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editarResponsables"
+                    name="responsables"
+                    placeholder="Ej. Ana, Luis"
+                    required
+                  />
+                  <div class="form-text">
+                    Separar varios responsables con coma.
+                  </div>
+                </div>
+
+                <!-- Recursos -->
+                <div class="mb-3">
+                  <label for="recursos" class="form-label">Recursos</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editarRecursos"
+                    name="recursos"
+                    placeholder="Ej. MySQL Workbench, Servidor de desarrollo"
+                    required
+                  />
+                  <div class="form-text">Separar varios recursos con coma.</div>
+                </div>
+
+                <!-- Duración -->
+                <div class="mb-3">
+                  <label for="duracion" class="form-label"
+                    >Duración (días)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="editarDuracion"
+                    name="duracion"
+                    min="1"
+                    placeholder="Ej. 5"
+                    required
+                  />
+                </div>
+
+                <!-- Fechas -->
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="fechaInicio" class="form-label"
+                      >Fecha Inicio</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="editarFechaInicio"
+                      name="fechaInicio"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="fechaFin" class="form-label">Fecha Fin</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="editarFechaFin"
+                      name="fechaFin"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <!-- Indicadores -->
+                <div class="mb-3">
+                  <label for="indicadores" class="form-label"
+                    >Indicadores</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="editarIndicadores"
+                    name="indicadores"
+                    rows="3"
+                    placeholder="Ej. Modelo relacional validado, Sin errores de integridad"
+                  ></textarea>
+                  <div class="form-text">
+                    Separar varios indicadores con coma.
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                id="btnEditar"
+                form="formEditarActividad"
+                class="btn btn-primary"
+              >
+                Editar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Actividades content -->
       <div id="actividadesCollapse" class="collapse show">

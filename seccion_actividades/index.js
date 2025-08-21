@@ -51,7 +51,6 @@ function renderTabla() {
     return loadTemplate().then(renderTabla);
   }
 
-  console.log(actividades);
   const view = {
     actividades: actividades.map((a, i) => ({
       index: i,
@@ -129,11 +128,11 @@ $(document).ready(function () {
 
     actividades.push({
       descripcion,
-      indicadores,
-      responsables,
+      indicadores: indicadores.split(",").map((i) => i.trim()),
+      responsables: responsables.split(",").map((r) => r.trim()),
       fechaInicio,
       fechaFin,
-      recursos,
+      recursos: recursos.split(",").map((r) => r.trim()),
       duracion,
     });
     renderTabla();
@@ -148,11 +147,13 @@ $(document).ready(function () {
   $(document).on("click", ".btn-edit", function () {
     idxEdit = parseInt($(this).data("index"), 10);
     const a = actividades[idxEdit];
-    $("#editarNombre").val(a.nombre);
-    $("#editarIndicador").val(a.indicador);
-    $("#editarResponsable").val(a.responsable);
-    $("#editarInicio").val(a.inicio);
-    $("#editarFin").val(a.fin);
+    $("#editarDescripcion").val(a.descripcion);
+    $("#editarRecursos").val(a.recursos);
+    $("#editarDuracion").val(a.duracion);
+    $("#editarIndicadores").val(a.indicadores);
+    $("#editarResponsables").val(a.responsables);
+    $("#editarFechaInicio").val(a.fechaInicio);
+    $("#editarFechaFin").val(a.fechaFin);
     const modal = new bootstrap.Modal(
       document.getElementById("modalEditarActividad")
     );
@@ -164,22 +165,40 @@ $(document).ready(function () {
     e.preventDefault();
     if (idxEdit < 0) return;
 
-    const nombre = $("#editarNombre").val().trim();
-    const indicador = $("#editarIndicador").val();
-    const responsable = $("#editarResponsable").val().trim();
-    const inicio = $("#editarInicio").val();
-    const fin = $("#editarFin").val();
+    const descripcion = $("#editarDescripcion").val().trim();
+    const indicadores = $("#editarIndicadores").val();
+    const responsables = $("#editarResponsables").val().trim();
+    const fechaInicio = $("#editarFechaInicio").val();
+    const fechaFin = $("#editarFechaFin").val();
+    const recursos = $("#editarRecursos").val().trim();
+    const duracion = parseInt($("#editarDuracion").val(), 10);
 
-    if (!nombre || !indicador || !responsable || !inicio || !fin) {
+    if (
+      !descripcion ||
+      !indicadores ||
+      !responsables ||
+      !fechaInicio ||
+      !fechaFin ||
+      !duracion ||
+      !recursos
+    ) {
       alert("Complete los campos obligatorios (*)");
       return;
     }
-    if (new Date(inicio) > new Date(fin)) {
+    if (new Date(fechaInicio) > new Date(fechaFin)) {
       alert("La fecha de inicio no puede ser mayor que la fecha fin");
       return;
     }
 
-    actividades[idxEdit] = { nombre, indicador, responsable, inicio, fin };
+    actividades[idxEdit] = {
+      descripcion,
+      indicadores,
+      responsables,
+      fechaInicio,
+      fechaFin,
+      recursos,
+      duracion,
+    };
     renderTabla();
     idxEdit = -1;
     bootstrap.Modal.getInstance(
@@ -194,6 +213,11 @@ $(document).ready(function () {
       actividades.splice(idx, 1);
       renderTabla();
     }
+  });
+
+  $("#actividadModal").on("hidden.bs.modal", function () {
+    // Limpiar el formulario al abrir el modal
+    $("#actividadForm")[0].reset();
   });
 
   // Regresar
