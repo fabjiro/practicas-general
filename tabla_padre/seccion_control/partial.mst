@@ -1,0 +1,23 @@
+{{#seccionControl}}
+<tr>
+            <td class='text-center'>{{descripcion}}</td>
+            <td class='text-center'>{{importancia}}</td>
+            <td class='text-center'>{{probabilidad}}</td>
+            <td class='text-center'>{{impacto}}</td>
+            <td class='text-center'><span class='badge' style='background:{{riesgo}};'>&nbsp;&nbsp;&nbsp;</span> <span>&nbsp;&nbsp;&nbsp;{{riesgoValor}}</span></td>
+            <td class='text-center'>{{priorizacion}}</td>
+            <td class='text-center'>{{activo}}</td>
+             <td class='text-center'>
+                <button class='btn btn-primary btn-sm btnEditar' data-index='{{index}}'><i class='bi bi-pencil-fill'></i></button>
+                {{#esActivo}}
+                    <button class='btn btn-warning btn-sm btnDesactivar' data-index='{{index}}'> <i class="bi bi-ban"></i> </button>
+                {{/esActivo}}
+                {{^esActivo}}
+                    <button class='btn btn-success btn-sm btnActivar' data-index='{{index}}'> <i class="bi bi-check-square-fill"></i> </button>
+                {{/esActivo}}
+                <button class='btn btn-danger btn-sm btnEliminar' data-index='{{index}}'> <i class="bi bi-trash-fill"></i> </button>
+            </td>
+        </tr>
+{{/seccionControl}}
+
+

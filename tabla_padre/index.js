@@ -142,4 +142,9 @@ $(document).ready(function () {
   $("#btnBack").on("click", function () {
     history.back();
   });
+
+  $(document).on('click', '.btnSeccionControl', function() {
+    let idx = $(this).data('index');
+    window.location.href = `./seccion_control/index.html?index=${idx}`;
+    });
 });
