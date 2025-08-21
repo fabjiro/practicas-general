@@ -18,7 +18,7 @@
   </td>
   <td class="text-center">{{duracion}} dias</td>
   <td class="text-center">{{fechaInicio}}</td>
-  <td class="text-center">{{fechaInicio}}</td>
+  <td class="text-center">{{fechaFin}}</td>
   <td class="text-center">
     <button class="btn btn-primary btn-sm btn-edit" data-index="{{index}}">
       <i class="bi bi-pencil-fill"></i>
