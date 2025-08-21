@@ -73,47 +73,10 @@
         </div>
 
         <div class="col-md-12">
-          <label class="form-label">Nombre de la Tarea(<span class="text-danger">*</span>)</label>
+          <label class="form-label">Riesgo(<span class="text-danger">*</span>)</label>
           <textarea id="nombreTarea" rows="2" class="form-control border border-success" placeholder="Introduzca su Actividad" required></textarea>
         </div>
 
-        <div class="col-md-6">
-          <label class="form-label">Eje de la Estrategia Nacional de Educación(<span class="text-danger">*</span>)</label>
-          <select id="eje" class="form-select border border-success" required>
-            <option value="" selected>Seleccione una opción</option>
-            <option>Calidad educativa</option>
-            <option>Inclusión</option>
-            <option>Tecnología</option>
-          </select>
-        </div>
-
-        <div class="col-md-6">
-          <label class="form-label">Responsables(<span class="text-danger">*</span>)</label>
-          <textarea id="responsables" rows="2" class="form-control border border-success" placeholder="Introduzca los Responsables" required></textarea>
-        </div>
-
-        <div class="col-md-6">
-          <label class="form-label">Medio de Verificación (<span class="text-danger">*</span>)</label>
-          <textarea id="medio" rows="2" class="form-control border border-success" placeholder="Introduzca el medio de verificación" required></textarea>
-        </div>
-
-        <div class="col-12">
-          <label class="form-label d-block">Periodo(<span class="text-danger">*</span>)</label>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                <input id="fechaInicio" type="date" class="form-control border-success" placeholder="Fecha inicio: DD-MM-YYYY" required />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                <input id="fechaFin" type="date" class="form-control border-success" placeholder="Fecha Final: DD-MM-YYYY" required />
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div class="col-12">
           <button id="btnAgregar" class="btn btn-success"><i class="bi bi-plus-circle"></i> Agregar</button>
@@ -122,13 +85,13 @@
     </div>
 
     <!-- Actividades header -->
-    <div class="d-flex align-items-center justify-content-between border-bottom mt-4 mb-2 section-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#actividadesCollapse" aria-expanded="false" role="button">
+    <div class="d-flex align-items-center justify-content-between border-bottom mt-4 mb-2 section-toggle" data-bs-toggle="collapse" data-bs-target="#actividadesCollapse" aria-expanded="true" role="button">
       <span class="fw-semibold">Actividades</span>
       <i class="bi bi-chevron-down chevron"></i>
     </div>
 
     <!-- Actividades content -->
-    <div id="actividadesCollapse" class="collapse">
+    <div id="actividadesCollapse" class="collapse show">
       <div class="table-responsive">
         <table class="table table-bordered align-middle mb-0">
           <thead>

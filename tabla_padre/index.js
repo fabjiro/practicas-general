@@ -1,5 +1,8 @@
 // Datos en memoria
-let actividades = [];
+let actividades = [
+  { nombre: 'Capacitación docentes', indicador: 'Docentes capacitados', responsable: 'Equipo Pedagógico', inicio: '2025-09-01', fin: '2025-09-15' },
+  { nombre: 'Mejora de infraestructura', indicador: 'Aulas construidas', responsable: 'Área de Infraestructura', inicio: '2025-10-01', fin: '2025-12-31' }
+];
 let idxEdit = -1;
 
 function formatDate(iso) {
@@ -38,6 +41,12 @@ function expandActividades() {
 }
 
 $(document).ready(function () {
+  // rotate chevrons based on collapse state
+  $(document).on('click', '.section-toggle', function() {
+    $(this).toggleClass('collapsed');
+    $(this).find('.chevron').toggleClass('rotated');
+  });
+
   renderTabla();
 
   // Agregar actividad
