@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planificación - Matriz de Evaluación</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <style>
+    .table thead { --bs-table-bg: #2596be; --bs-table-color:#fff; }
+    .btn-success { background-color:#28a745; border:none; }
+    .section-toggle { cursor:pointer; user-select:none; padding: .25rem 0; }
+    .section-toggle .chevron { transition: transform .2s ease-in-out; }
+    .section-toggle.collapsed .chevron { transform: rotate(-90deg); }
+    .form-select.border-success, .form-control.border-success, textarea.border-success { border-color:#28a745 !important; }
+    .placeholder-row td { color:#6c757d; font-style:italic; }
+  </style>
+</head>
+<body class="p-4">
+  <div class="container">
+    <div class="row mb-3">
+      <div class="col-lg-8">
+        <h5 class="mb-1">Planificación</h5>
+        <small class="text-muted">Matriz de Evaluación de Riesgo Y Plan de Mitigación</small>
+      </div>
+    </div>
+
+    <!-- Tareas header -->
+    <div class="d-flex align-items-center justify-content-between border-bottom mb-3 section-toggle" data-bs-toggle="collapse" data-bs-target="#tareasCollapse" aria-expanded="true" role="button">
+      <span class="fw-semibold">Tareas</span>
+      <i class="bi bi-chevron-down chevron"></i>
+    </div>
+
+    <!-- Tareas content -->
+    <div id="tareasCollapse" class="collapse show">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Función(<span class="text-danger">*</span>)</label>
+          <select id="funcion" class="form-select border border-success" required>
+            <option value="" selected>Seleccione una opción...</option>
+            <option>Administrativa</option>
+            <option>Operativa</option>
+            <option>Estrategica</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Objetivo Estratégico (<span class="text-danger">*</span>)</label>
+          <select id="objetivo" class="form-select border border-success" required>
+            <option value="" selected>Seleccione una opción...</option>
+            <option>Mejorar cobertura</option>
+            <option>Optimizar procesos</option>
+            <option>Desarrollo docente</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Acción Estratégica (<span class="text-danger">*</span>)</label>
+          <select id="accion" class="form-select border border-success" required>
+            <option value="" selected>Seleccione una opción...</option>
+            <option>Capacitaciones</option>
+            <option>Infraestructura</option>
+            <option>Evaluaciones</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Indicador de Producto (<span class="text-danger">*</span>)</label>
+          <select id="indicador" class="form-select border border-success" required>
+            <option value="" selected>Seleccione una opción...</option>
+            <option>Matrícula</option>
+            <option>Docentes capacitados</option>
+            <option>Aulas construidas</option>
+          </select>
+        </div>
+
+        <div class="col-md-12">
+          <label class="form-label">Nombre de la Tarea(<span class="text-danger">*</span>)</label>
+          <textarea id="nombreTarea" rows="2" class="form-control border border-success" placeholder="Introduzca su Actividad" required></textarea>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Eje de la Estrategia Nacional de Educación(<span class="text-danger">*</span>)</label>
+          <select id="eje" class="form-select border border-success" required>
+            <option value="" selected>Seleccione una opción</option>
+            <option>Calidad educativa</option>
+            <option>Inclusión</option>
+            <option>Tecnología</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Responsables(<span class="text-danger">*</span>)</label>
+          <textarea id="responsables" rows="2" class="form-control border border-success" placeholder="Introduzca los Responsables" required></textarea>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Medio de Verificación (<span class="text-danger">*</span>)</label>
+          <textarea id="medio" rows="2" class="form-control border border-success" placeholder="Introduzca el medio de verificación" required></textarea>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label d-block">Periodo(<span class="text-danger">*</span>)</label>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                <input id="fechaInicio" type="date" class="form-control border-success" placeholder="Fecha inicio: DD-MM-YYYY" required />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                <input id="fechaFin" type="date" class="form-control border-success" placeholder="Fecha Final: DD-MM-YYYY" required />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button id="btnAgregar" class="btn btn-success"><i class="bi bi-plus-circle"></i> Agregar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actividades header -->
+    <div class="d-flex align-items-center justify-content-between border-bottom mt-4 mb-2 section-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#actividadesCollapse" aria-expanded="false" role="button">
+      <span class="fw-semibold">Actividades</span>
+      <i class="bi bi-chevron-down chevron"></i>
+    </div>
+
+    <!-- Actividades content -->
+    <div id="actividadesCollapse" class="collapse">
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="text-center">Nombre</th>
+              <th class="text-center">Indicador</th>
+              <th class="text-center">Responsable</th>
+              <th class="text-center">Periodo</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyActividades">
+            <tr class="placeholder-row">
+              <td colspan="5" class="text-center">Sin datos para mostrar</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <button id="btnBack" class="btn btn-warning"><i class="bi bi-arrow-left-short"></i> Regresar</button>
+    </div>
+  </div>
+
+  <!-- Modal Editar Actividad -->
+  <div class="modal fade" id="modalEditarActividad" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Actividad</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="formEditarActividad">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Nombre</label>
+              <input id="editarNombre" type="text" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Indicador</label>
+              <select id="editarIndicador" class="form-select" required>
+                <option>Matrícula</option>
+                <option>Docentes capacitados</option>
+                <option>Aulas construidas</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Responsable</label>
+              <textarea id="editarResponsable" rows="2" class="form-control" required></textarea>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Fecha Inicio</label>
+                <input id="editarInicio" type="date" class="form-control" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Fecha Fin</label>
+                <input id="editarFin" type="date" class="form-control" required />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./index.js"></script>
+</body>
+</html>
