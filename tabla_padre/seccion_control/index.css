@@ -1,0 +1,7 @@
+ .table thead { --bs-table-bg: #2596be; --bs-table-color:#fff; }
+    .btn-success { background-color:#28a745; border:none; }
+    .section-toggle { cursor:pointer; user-select:none; padding: .25rem 0; }
+    .section-toggle .chevron { transition: transform .2s ease-in-out; }
+    .section-toggle.collapsed .chevron { transform: rotate(-90deg); }
+    .form-select.border-success, .form-control.border-success, textarea.border-success { border-color:#28a745 !important; }
+    .placeholder-row td { color:#6c757d; font-style:italic; }
