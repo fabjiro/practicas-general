@@ -1,0 +1,31 @@
+{{#actividades}}
+<tr>
+  <td>{{descripcion}}</td>
+  <td>
+    {{#responsables}}
+      <div>{{.}}</div>
+    {{/responsables}}
+  </td>
+  <td class="text-center">
+    {{#recursos}}
+      <div>- {{.}}</div>
+    {{/recursos}}
+  </td>
+  <td class="text-center">
+    {{#indicadores}}
+      <div>- {{.}}</div>
+    {{/indicadores}}
+  </td>
+  <td class="text-center">{{duracion}} dias</td>
+  <td class="text-center">{{fechaInicio}}</td>
+  <td class="text-center">{{fechaFin}}</td>
+  <td class="text-center">
+    <button class="btn btn-primary btn-sm btn-edit" data-index="{{index}}">
+      <i class="bi bi-pencil-fill"></i>
+    </button>
+    <button class="btn btn-danger btn-sm btn-delete" data-index="{{index}}">
+      <i class="bi bi-trash-fill"></i>
+    </button>
+  </td>
+</tr>
+{{/actividades}}
